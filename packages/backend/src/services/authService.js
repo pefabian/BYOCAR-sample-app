@@ -9,13 +9,14 @@ import createError from 'http-errors';
  */
 class AuthService {
 
-  TOKEN_URL = 'https://id.mercedes-benz.com/as/token.oauth2';
+  TOKEN_URL = 'https://ssoalpha.dvb.corpinter.net/v1/token';
 
   constructor(config) {
     this.tryout = config.tryout;
     this.clientId = config.clientId;
     this.clientSecret = config.clientSecret;
     this.redirectUri = config.redirectUri;
+	this.scope = config.scope;
 
     console.log('Instantiated AuthService');
   }
@@ -30,7 +31,7 @@ class AuthService {
    */
   async getAccessToken(code) {
     const authHeader = authorizationHeader(this.clientId, this.clientSecret);
-    const params = prepareRequestParams(code, this.redirectUri);
+    const params = prepareRequestParams(code, this.redirectUri, this.scope);
 
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -56,7 +57,7 @@ class AuthService {
   }
 };
 
-const prepareRequestParams = (authCode, redirectUri) => {
+const prepareRequestParams = (authCode, redirectUri, scope) => {
   if (!authCode) {
     throw createError.BadRequest('No authorization code provided');
   }
@@ -65,6 +66,7 @@ const prepareRequestParams = (authCode, redirectUri) => {
   params.append('grant_type', 'authorization_code');
   params.append('code', authCode);
   params.append('redirect_uri', redirectUri);
+  params.append('scope', scope);
 
   return params;
 };
