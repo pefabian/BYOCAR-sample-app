@@ -227,7 +227,7 @@ provide a login screen to the end user for authentication.
 Example Authorization Request:
 
 ....
-https://id.mercedes-benz.com/as/authorization.oauth2 \
+https://ssoalpha.dvb.corpinter.net/v1/auth \
   ?response_type=code \
   &client_id=<insert_your_client_id_here> \
   &redirect_uri=<insert_redirect_uri_here> \
@@ -286,10 +286,10 @@ Example Token Request:
 
 [source,sh]
 ----
-curl --request POST 'https://id.mercedes-benz.com/as/token.oauth2' \
+curl --request POST 'https://ssoalpha.dvb.corpinter.net/v1/token' \
   --header 'Authorization: Basic <insert_your_base64_encoded_client_id_and_client_secret_here>' \
   --header 'content-type: application/x-www-form-urlencoded' \
-  --data 'grant_type=authorization_code&code=<insert_authentication_code_here>&redirect_uri=<insert_redirect_uri_here>'
+  --data 'grant_type=authorization_code&code=<insert_authentication_code_here>&redirect_uri=<insert_redirect_uri_here>&scope=<insert_scope_here>'
 ----
 
 The token request from the Sample App backend uses HTTP Basic
@@ -323,7 +323,7 @@ follows:
 
 [source,sh]
 ----
-curl --request GET 'https://api.mercedes-benz.com/tryout/vehicle_images/v1/vehicles/<insert_your_vin_here>?roofOpen=false&night=false&background=false&cropped=false&jpeg=false&apikey=<insert_your_api_key_here>' \
+curl --request GET 'https://api.mercedes-benz.com/vehicle_images/v2/vehicles/<insert_your_vin_here>?roofOpen=false&night=false&background=false&cropped=false&jpeg=false&apikey=<insert_your_api_key_here>' \
   --header 'Accept: application/json'
 ----
 
@@ -483,6 +483,16 @@ The applications will be available on these ports/via these base URLs:
 |UI |http://localhost:8080
 |Backend |http://localhost:3000
 |===
+
+==== Potential OpenSSL issues
+
+You might face an 'ERR_OSSL_EVP_UNSUPPORTED' error when running the application.
+You can avoid this issue by setting an envrionment variable to allow legacy OpenSSL providers.
+
+[source,sh]
+----
+export NODE_OPTIONS=--openssl-legacy-provider
+----
 
 == Contributing
 
