@@ -13,6 +13,7 @@ const tryout = USE_TRYOUT == 'true';
 
 const config = {
   PORT,
+  SCOPE: "openid mb:vehicle:mbdata:fuelstatus mb:vehicle:mbdata:evstatus",
   auth: {
     tryout,
     clientId: CLIENT_ID,

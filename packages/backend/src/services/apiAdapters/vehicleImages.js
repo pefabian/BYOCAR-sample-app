@@ -9,7 +9,7 @@ import fs from 'fs';
  */
 class VehicleImagesAdapter {
 
-  API_URL = 'https://api.mercedes-benz.com/vehicle_images/v1';
+  API_URL = 'https://api.mercedes-benz.com/vehicle_images/v2';
   TRYOUT_API_KEY = 'd705585c-a672-11ea-bb37-0242ac130002';
 
   constructor(config) {
